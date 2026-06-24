@@ -225,6 +225,8 @@ class tradeModel extends model
             $list = $this->lang->product->lineList;
         }
 
+        $this->app->loadModuleConfig('report', 'sys');
+
         if($module == 'trade')
         {
             $datas = $this->dao->select("$groupBy as name, sum(money) as value")->from(TABLE_TRADE)
@@ -239,14 +241,18 @@ class tradeModel extends model
         else
         {
             $t2 = $this->config->report->moduleList[$module];
-            $datas = $this->dao->select("ifnull(t2.{$groupBy}, 'null') as name, sum(money) as value")->from(TABLE_TRADE)->alias('t1')
-                ->leftJoin($t2)->alias('t2')->on("t1.$field = t2.id")
-                ->where('t1.type')->eq($type)
-                ->beginIf($currency != '')->andWhere('currency')->eq($currency)->fi()
-                ->beginIf($startDate != '' and $endDate != '')->andWhere('date')->ge($startDate)->andWhere('date')->lt($endDate)->fi()
-                ->groupBy("t2.{$groupBy}")
-                ->orderBy('value_desc')
-                ->fetchAll("name");
+            try {
+                $datas = $this->dao->select("ifnull(t2.{$groupBy}, 'null') as name, sum(money) as value")->from(TABLE_TRADE)->alias('t1')
+                    ->leftJoin($t2)->alias('t2')->on("t1.$field = t2.id")
+                    ->where('t1.type')->eq($type)
+                    ->beginIf($currency != '')->andWhere('currency')->eq($currency)->fi()
+                    ->beginIf($startDate != '' and $endDate != '')->andWhere('date')->ge($startDate)->andWhere('date')->lt($endDate)->fi()
+                    ->groupBy("t2.{$groupBy}")
+                    ->orderBy('value_desc')
+                    ->fetchAll("name");
+            } catch (\Throwable $e) {
+                $datas = array();
+            }
         }
 
         if(empty($datas)) return array();
