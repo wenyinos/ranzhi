@@ -138,6 +138,27 @@ mysql -u root -p ranzhi < db/upgrade4.0.sql
 mysql -u root -p ranzhi < db/upgrade4.1.sql
 ```
 
+## 已知问题与修复
+
+### PHP 7.4 兼容性修复
+
+**1. `cash/dashboard` 页面报错 — `array_diff()` stdClass 类型错误**
+
+- 文件：`app/cash/block/control.php:139`
+- 原因：`fetchAll('id')` 返回以 `id` 为键的 stdClass 对象数组，`array_diff()` 在 PHP 7.4+ 无法将对象转为字符串进行比较
+- 修复：`array_diff()` → `array_diff_key()`
+
+**2. `cash/trade/report` 页面报错 — 空数据时日期值无效**
+
+- 文件：`app/cash/trade/control.php:981`
+- 原因：交易表为空时 `getDatePairs()` 返回空数组，`current([])` 返回空，导致拼接出 `date >= '-01-01'` 非法日期
+- 修复：`current($tradeYears)` → `current($tradeYears) ?: date('Y')`，空时默认使用当前年份
+
+### 其他注意事项
+
+- **PHP 扩展依赖**：`cash/depositor/check` 功能需要 `bcmath` 扩展（`php-bcmath`）
+- **PHP 版本**：项目不兼容 PHP 8.0+（使用了 `get_magic_quotes_gpc` 等已移除函数）
+
 ## 许可证
 
 Z Public License 1.2（ZPL） — 详见 [doc/LICENSE](doc/LICENSE)

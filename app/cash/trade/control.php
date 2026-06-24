@@ -978,7 +978,7 @@ class trade extends control
         }
         rsort($tradeYears);
 
-        $currentYear  = current($tradeYears);
+        $currentYear  = current($tradeYears) ?: date('Y');
         $currentMonth = '00';
         if(!empty($date))
         {

@@ -136,7 +136,7 @@ class block extends control
         $denyCategories  = array();
         $outCategories   = $this->dao->select('*')->from(TABLE_CATEGORY)->where('type')->eq('out')->fetchAll('id');
         $allowCategories = $this->loadModel('tree')->process($outCategories);
-        foreach(array_diff($outCategories, $allowCategories) as $id => $category)
+        foreach(array_diff_key($outCategories, $allowCategories) as $id => $category)
         {
             $denyCategories[] = $id; 
         }
