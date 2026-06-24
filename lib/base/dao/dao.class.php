@@ -693,7 +693,7 @@ class baseDAO
                 if($this->method == 'select')
                 {
                     if(isset(dao::$cache['dbh'][$key])) return dao::$cache[$key];
-                    $result = $this->slaveDBH ? $this->slaveDBH->query($sql) : $this->dbh->query($sql);
+                    $result = $this->slaveDBH->query($sql);
                     dao::$cache['dbh'][$key] = $result;
                     return $result;
                 }
