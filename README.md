@@ -20,7 +20,15 @@
 - **PHP**: 5.6 ~ 7.4（不兼容 PHP 8.0+）
 - **MySQL**: 5.x
 - **Web Server**: Nginx 或 Apache（需开启 URL Rewrite）
-- **PHP 扩展**: `pdo_mysql`, `session`, `json`, `mbstring`
+- **PHP 扩展**（必需）:
+  - `pdo_mysql` — 数据库连接
+  - `mbstring` — 多字节字符串处理
+  - `json` — JSON 编解码
+  - `session` — 会话管理
+  - `curl` — HTTP 请求
+  - `dom` / `xml` / `SimpleXML` — XML/HTML 解析
+  - `bcmath` — 高精度计算（cash 模块）
+  - `sockets` — Socket 通信（xuanxuan 即时通讯）
 
 ## 快速开始
 
