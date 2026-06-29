@@ -17,6 +17,7 @@
  * 
  * @package framework
  */
+#[\AllowDynamicProperties]
 class baseHTML
 {
     /**
@@ -733,6 +734,7 @@ EOT;
  * 
  * @package front
  */
+#[\AllowDynamicProperties]
 class baseJS
 {
     /**
@@ -1154,6 +1156,7 @@ EOT;
  *
  * @package front
  */
+#[\AllowDynamicProperties]
 class baseCSS
 {
     /**

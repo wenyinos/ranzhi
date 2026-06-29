@@ -1060,7 +1060,7 @@ class commonModel extends model
     {   
         global $config;
         $changes    = array();
-        $magicQuote = get_magic_quotes_gpc();
+        $magicQuote = false;
         foreach($new as $key => $value)
         {   
             if(!isset($old->$key))                   continue;

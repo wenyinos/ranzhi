@@ -12,6 +12,7 @@
  *  May you find forgiveness for yourself and forgive others.
  *  May you share freely, never taking more than you give.
  */
+#[\AllowDynamicProperties]
 class baseRouter
 {
     /**
@@ -596,8 +597,7 @@ class baseRouter
         $this->cookie  = new super('cookie');
         $this->session = new super('session');
 
-        unset($GLOBALS);
-        unset($_REQUEST);
+        /* PHP 8.1+: $GLOBALS cannot be unset. */
 
         $_FILES  = validater::filterFiles();
         $_POST   = validater::filterSuper($_POST);
@@ -1990,6 +1990,7 @@ class baseRouter
         global $lang;
         if(!is_object($lang)) $lang = new language();
         if(!isset($lang->$moduleName)) $lang->$moduleName = new stdclass();
+        if(!empty($appName) && $appName != $moduleName && !isset($lang->$appName)) $lang->$appName = new stdclass();
 
         static $loadedLangs = array();
         foreach($langFilesToLoad as $langFile)
@@ -2229,8 +2230,9 @@ class baseRouter
  * 
  * @package framework
  */
+#[\AllowDynamicProperties]
 class config
-{ 
+{
     /**
      * 设置成员变量，成员可以是'db.user'类似的格式。
      * Set the value of a member. the member can be the format like db.user.
@@ -2254,10 +2256,24 @@ class config
 /**
  * lang类。
  * The lang class.
- * 
+ *
  * @package framework
  */
-class language 
+class langBag implements \ArrayAccess
+{
+    private $data = array();
+    public function __get($k)     { if(!isset($this->data[$k])) $this->data[$k] = new self(); return $this->data[$k]; }
+    public function __set($k, $v) { $this->data[$k] = $v; }
+    public function __isset($k)   { return isset($this->data[$k]); }
+    public function __unset($k)   { unset($this->data[$k]); }
+    public function offsetExists($o): bool { return isset($this->data[$o]); }
+    public function offsetGet($o): mixed   { return $this->data[$o] ?? null; }
+    public function offsetSet($o, $v): void { $this->data[$o] = $v; }
+    public function offsetUnset($o): void   { unset($this->data[$o]); }
+}
+
+#[\AllowDynamicProperties]
+class language
 {
     /**
      * 设置成员变量，成员可以是'db.user'类似的格式。
@@ -2277,6 +2293,12 @@ class language
     public function set($key, $value)
     {
         helper::setMember('lang', $key, $value);
+    }
+
+    public function __get($name)
+    {
+        $this->$name = new langBag();
+        return $this->$name;
     }
 
     /**
@@ -2301,6 +2323,7 @@ class language
  * 
  * @package framework
  */
+#[\AllowDynamicProperties]
 class super
 {
     /**

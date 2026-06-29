@@ -17,6 +17,7 @@
  * 
  * @package framework
  */
+#[\AllowDynamicProperties]
 class baseDAO
 {
     /* Use these strange strings to avoid conflicting with these keywords in the sql body. */
@@ -1311,6 +1312,7 @@ class baseDAO
  * 
  * @package framework
  */
+#[\AllowDynamicProperties]
 class baseSQL
 {
     /**
@@ -1404,7 +1406,7 @@ class baseSQL
     {
         global $dbh;
         $this->dbh        = $dbh;
-        $this->magicQuote = (version_compare(phpversion(), '5.4', '<') and function_exists('get_magic_quotes_gpc') and get_magic_quotes_gpc());
+        $this->magicQuote = false;
     }
 
     /**

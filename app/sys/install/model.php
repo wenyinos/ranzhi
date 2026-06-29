@@ -32,7 +32,7 @@ class installModel extends model
      */
     public function checkPHP()
     {
-        return $result = version_compare(PHP_VERSION, '5.2.0') >= 0 ? 'ok' : 'fail';
+        return $result = version_compare(PHP_VERSION, '8.2.0') >= 0 ? 'ok' : 'fail';
     }
 
     /**

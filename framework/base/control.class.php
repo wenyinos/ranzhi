@@ -11,6 +11,7 @@
  *  May you find forgiveness for yourself and forgive others.
  *  May you share freely, never taking more than you give.
  */
+#[\AllowDynamicProperties]
 class baseControl
 {
     /**
@@ -792,9 +793,10 @@ class baseControl
         {
             if(!empty($data['message']))
             {
-                $message = json_decode(json_encode((array)$data['message']));
-                foreach((array)$message as $item => $errors) $message->$item = implode(',', $errors);
-                echo js::alert(strip_tags(implode(" ", (array) $message)));
+                $messages = (array)$data['message'];
+                $errors = array();
+                foreach($messages as $item => $msg) $errors[] = implode(',', (array)$msg);
+                echo js::alert(strip_tags(implode(" ", $errors)));
                 die(js::locate('back'));
             }
             die('fail');

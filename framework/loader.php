@@ -15,6 +15,10 @@ error_reporting(E_ALL);
 /* Start output buffer. */
 ob_start();
 
+
+/* Load Composer autoloader. */
+$composerAutoload = dirname(dirname(__FILE__)) . '/vendor/autoload.php';
+if(file_exists($composerAutoload)) require_once $composerAutoload;
 /* Define the run mode as front. */
 define('RUN_MODE', 'front');
 

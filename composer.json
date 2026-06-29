@@ -1,3 +1,16 @@
 {
-	    "require": {"php": "~5.6"}
+    "require": {
+        "php": "^8.2",
+        "phpmailer/phpmailer": "^6.9",
+        "phpoffice/phpspreadsheet": "^2.0",
+        "ezyang/htmlpurifier": "^4.17",
+        "guzzlehttp/guzzle": "^7.0"
+    },
+    "autoload": {
+        "classmap": [
+            "framework/",
+            "lib/base/",
+            "lib/dao/"
+        ]
+    }
 }
