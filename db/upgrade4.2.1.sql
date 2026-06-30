@@ -206,3 +206,7 @@ CREATE TABLE IF NOT EXISTS `crm_quoteitem` (
     PRIMARY KEY (`id`),
     KEY `idx_quote` (`quote`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- 进销存应用入口
+INSERT INTO `sys_entry` (`name`, `abbr`, `code`, `buildin`, `integration`, `open`, `key`, `ip`, `logo`, `login`, `logout`, `block`, `control`, `size`, `position`, `visible`, `order`, `zentao`, `category`)
+VALUES ('进销存', '库存', 'inventory', 1, 1, 'iframe', 'b7e2f8a1c3d4e5f6a7b8c9d0e1f2a3b4', '*', 'theme/default/images/ips/app-inventory.png', '../inventory', '', '', 'simple', 'max', 'default', 1, 25, '0', 0);
