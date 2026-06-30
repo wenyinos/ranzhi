@@ -129,7 +129,7 @@ location / {
 }
 
 location ~ ^/(sys|crm|oa|cash|proj|team|doc)(/.+)$ {
-    fastcgi_pass unix:/run/php-fpm/www.sock;
+    fastcgi_pass 127.0.0.1:9000;
     fastcgi_param SCRIPT_FILENAME $document_root/$1/index.php;
     fastcgi_param PATH_INFO $2;
     include fastcgi_params;
@@ -137,6 +137,7 @@ location ~ ^/(sys|crm|oa|cash|proj|team|doc)(/.+)$ {
 ```
 
 > 运行目录需设置为 `www`（即站点根目录指向 `ranzhi/www`）。
+> 1Panel 默认以 Docker 方式安装 PHP，`fastcgi_pass` 地址为 `127.0.0.1:9000`（容器端口映射）。如使用 Socket 模式，需替换为实际 Socket 路径。
 
 **宝塔面板（BT Panel）配置**：
 
