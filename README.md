@@ -129,7 +129,7 @@ location / {
     try_files $uri $uri/ /index.php?$query_string;
 }
 
-location ~ ^/(sys|crm|oa|cash|proj|team|doc)(/.+)$ {
+location ~ ^/(sys|crm|oa|cash|proj|team|doc|inventory)(/.+)$ {
     fastcgi_pass 127.0.0.1:9000;
     fastcgi_param SCRIPT_FILENAME $document_root/$1/index.php;
     fastcgi_param PATH_INFO $2;
@@ -149,7 +149,7 @@ location / {
     try_files $uri $uri/ /index.php?$query_string;
 }
 
-location ~ ^/(sys|crm|oa|cash|proj|team|doc)(/.+)$ {
+location ~ ^/(sys|crm|oa|cash|proj|team|doc|inventory)(/.+)$ {
     fastcgi_pass 127.0.0.1:9000;
     fastcgi_param SCRIPT_FILENAME $document_root/$1/index.php;
     fastcgi_param PATH_INFO $2;
