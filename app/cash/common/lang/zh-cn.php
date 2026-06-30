@@ -24,6 +24,7 @@ $lang->menu->cash->check     = '对账|depositor|check|';
 $lang->menu->cash->report    = '报表|trade|report|';
 $lang->menu->cash->depositor = '账户|depositor|browse|';
 $lang->menu->cash->provider  = '供应商|provider|browse|';
+$lang->menu->cash->invoice   = '发票|invoice|browse|';
 //$lang->menu->cash->contact   = '联系人|contact|browse|';
 $lang->menu->cash->setting   = '设置|tree|browse|type=in|';
 

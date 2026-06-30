@@ -111,3 +111,5 @@ $lang->install->buildinEntry->doc['name']  = 'DOC';
 $lang->install->buildinEntry->doc['abbr']  = '';
 $lang->install->buildinEntry->proj['name'] = 'PORJ';
 $lang->install->buildinEntry->proj['abbr'] = '';
+$lang->install->buildinEntry->inventory['name'] = 'INVENTORY';
+$lang->install->buildinEntry->inventory['abbr'] = '';

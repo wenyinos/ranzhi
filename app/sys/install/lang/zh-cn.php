@@ -111,3 +111,5 @@ $lang->install->buildinEntry->doc['name']  = '文档';
 $lang->install->buildinEntry->doc['abbr']  = '文档';
 $lang->install->buildinEntry->proj['name'] = '项目';
 $lang->install->buildinEntry->proj['abbr'] = '项目';
+$lang->install->buildinEntry->inventory['name'] = '进销存';
+$lang->install->buildinEntry->inventory['abbr'] = '库存';

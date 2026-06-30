@@ -431,6 +431,17 @@ EOT;
         $entry->order = 60;
 
         $this->dao->insert(TABLE_ENTRY)->data($entry)->exec();
+
+        /* Add inventory. */
+        $entry->name  = $this->lang->install->buildinEntry->inventory['name'];
+        $entry->abbr  = $this->lang->install->buildinEntry->inventory['abbr'];
+        $entry->code  = 'inventory';
+        $entry->key   = 'b7e2f8a1c3d4e5f6a7b8c9d0e1f2a3b4';
+        $entry->logo  = 'theme/default/images/ips/app-inventory.png';
+        $entry->login = '../inventory';
+        $entry->order = 25;
+
+        $this->dao->insert(TABLE_ENTRY)->data($entry)->exec();
     }
 
     /**

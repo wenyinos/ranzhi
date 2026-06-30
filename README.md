@@ -1,14 +1,15 @@
 # 然之协同 (Ranzhi)
 
-开源团队协作管理系统 v4.2，由[易软天创](http://www.cnezsoft.com/)开发，基于 ZenTaoPHP 框架。
+开源团队协作管理系统 v4.2.1，由[易软天创](http://www.cnezsoft.com/)开发，基于 ZenTaoPHP 框架。
 
 ## 功能模块
 
 | 模块 | 说明 |
 |------|------|
-| **crm** | 客户管理 — 客户、联系人、合同、订单、产品 |
+| **inventory** | 进销存 — 采购单、仓库、库存台账、出入库流水 |
+| **crm** | 客户管理 — 客户、联系人、商机、报价、合同、订单、产品 |
 | **oa**   | 日常办公 — 考勤、请假、加班、出差、报销、文档、待办 |
-| **cash** | 现金记账 — 账户、收支流水 |
+| **cash** | 现金记账 — 账户、收支流水、发票 |
 | **proj** | 项目管理 — 项目、任务 |
 | **team** | 团队分享 — 讨论、消息 |
 | **doc**  | 文档管理 |
@@ -85,7 +86,7 @@ server {
     index index.php index.html;
 
     # 应用路由：/{app}/{module}-{method}.html → /{app}/index.php
-    location ~ ^/(sys|crm|oa|cash|proj|team|doc)(/.+)$ {
+    location ~ ^/(sys|crm|oa|cash|proj|team|doc|inventory)(/.+)$ {
         fastcgi_pass unix:/run/php-fpm/www.sock;  # 或 127.0.0.1:9000
         fastcgi_param SCRIPT_FILENAME $document_root/$1/index.php;
         fastcgi_param PATH_INFO $2;
@@ -168,7 +169,7 @@ location ~ ^/(sys|crm|oa|cash|proj|team|doc)(/.+)$ {
     RewriteBase /
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteRule ^(sys|crm|oa|cash|proj|team|doc)/(.*)$ $1/index.php/$2 [L,QSA]
+    RewriteRule ^(sys|crm|oa|cash|proj|team|doc|inventory)/(.*)$ $1/index.php/$2 [L,QSA]
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteRule ^(.*)$ index.php/$1 [L,QSA]
@@ -194,9 +195,17 @@ bash run.sh
 ranzhi/
 ├── app/              # 业务模块（MVC）
 │   ├── sys/          # 系统核心
+│   ├── inventory/    # 进销存
+│   │   ├── purchase/ # 采购管理
+│   │   ├── warehouse/# 仓库管理
+│   │   └── stock/    # 库存管理
 │   ├── oa/           # 办公自动化
 │   ├── crm/          # 客户管理
+│   │   ├── opportunity/ # 商机管线
+│   │   ├── quote/    # 报价单
+│   │   └── followup/ # 跟进记录
 │   ├── cash/         # 财务
+│   │   └── invoice/  # 发票管理
 │   ├── proj/         # 项目
 │   ├── team/         # 团队
 │   ├── doc/          # 文档
@@ -209,10 +218,12 @@ ranzhi/
 ├── db/               # 数据库脚本
 │   ├── ranzhi.sql    # 初始化 SQL
 │   └── upgrade*.sql  # 升级脚本
+├── docs/             # 实施计划文档
 ├── framework/        # ZenTaoPHP 框架核心
-├── lib/              # 第三方库
+├── lib/              # 第三方库桥接文件
 ├── www/              # Web 根目录（静态资源、入口文件）
 │   ├── sys/index.php # 主入口
+│   ├── inventory/    # 进销存入口
 │   └── data/         # 上传文件存储
 ├── composer.json
 └── run.sh            # 容器启动脚本
@@ -255,7 +266,24 @@ app/{app}/{module}/
 # 按版本顺序执行升级脚本
 mysql -u root -p ranzhi < db/upgrade4.0.sql
 mysql -u root -p ranzhi < db/upgrade4.1.sql
+mysql -u root -p ranzhi < db/upgrade4.2.1.sql  # v4.2.1: 进销存 + CRM 增强（11 张新表）
 ```
+
+### v4.2.1 新增数据库表
+
+| 表名 | 说明 |
+|------|------|
+| `sys_purchase` | 采购单主表 |
+| `sys_purchaseitem` | 采购明细行 |
+| `sys_warehouse` | 仓库 |
+| `sys_stock` | 库存台账 |
+| `sys_stocklog` | 出入库流水 |
+| `cash_invoice` | 发票 |
+| `crm_opportunity` | 商机 |
+| `crm_opportunitylog` | 商机阶段变更日志 |
+| `crm_followup` | 跟进记录 |
+| `crm_quote` | 报价单 |
+| `crm_quoteitem` | 报价明细行 |
 
 ## 已知问题与修复
 

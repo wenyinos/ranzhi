@@ -19,8 +19,10 @@ $lang->menu->crm->contract  = 'Contract|contract|browse|mode=unfinished';
 $lang->menu->crm->customer  = 'Customer|customer|index|';
 $lang->menu->crm->provider  = 'Supplier|provider|browse|';
 $lang->menu->crm->contact   = 'Contact|contact|index|';
-$lang->menu->crm->leads     = 'List|leads|browse|';
-$lang->menu->crm->product   = 'Product|product|index|';
+$lang->menu->crm->leads       = 'List|leads|browse|';
+$lang->menu->crm->opportunity = 'Opportunity|opportunity|browse|';
+$lang->menu->crm->quote       = 'Quote|quote|browse|';
+$lang->menu->crm->product     = 'Product|product|index|';
 $lang->menu->crm->setting   = 'Settings|setting|lang|module=product&field=statusList';
 
 /* Menu of order module. */

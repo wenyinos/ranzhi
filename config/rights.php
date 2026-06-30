@@ -195,3 +195,70 @@ $config->rights->member['my']['dynamic']  = 'dynamic';
 $config->rights->member['my']['order']    = 'order';
 $config->rights->member['my']['contract'] = 'contract';
 $config->rights->member['my']['review']   = 'review';
+
+/* Purchase module rights. */
+$config->rights->member['purchase']['browse']    = 'browse';
+$config->rights->member['purchase']['create']    = 'create';
+$config->rights->member['purchase']['edit']      = 'edit';
+$config->rights->member['purchase']['view']      = 'view';
+$config->rights->member['purchase']['submit']    = 'submit';
+$config->rights->member['purchase']['approve']   = 'approve';
+$config->rights->member['purchase']['reject']    = 'reject';
+$config->rights->member['purchase']['receive']   = 'receive';
+$config->rights->member['purchase']['close']     = 'close';
+$config->rights->member['purchase']['delete']    = 'delete';
+$config->rights->member['purchase']['export']    = 'export';
+
+/* Warehouse module rights. */
+$config->rights->member['warehouse']['browse']   = 'browse';
+$config->rights->member['warehouse']['create']   = 'create';
+$config->rights->member['warehouse']['edit']     = 'edit';
+$config->rights->member['warehouse']['delete']   = 'delete';
+
+/* Stock module rights. */
+$config->rights->member['stock']['browse']       = 'browse';
+$config->rights->member['stock']['detail']       = 'detail';
+$config->rights->member['stock']['inbound']      = 'inbound';
+$config->rights->member['stock']['outbound']     = 'outbound';
+$config->rights->member['stock']['transfer']     = 'transfer';
+$config->rights->member['stock']['log']          = 'log';
+$config->rights->member['stock']['export']       = 'export';
+
+/* Invoice module rights. */
+$config->rights->member['invoice']['browse']     = 'browse';
+$config->rights->member['invoice']['create']     = 'create';
+$config->rights->member['invoice']['edit']       = 'edit';
+$config->rights->member['invoice']['view']       = 'view';
+$config->rights->member['invoice']['delete']     = 'delete';
+$config->rights->member['invoice']['export']     = 'export';
+
+/* Opportunity module rights. */
+$config->rights->member['opportunity']['browse']      = 'browse';
+$config->rights->member['opportunity']['create']      = 'create';
+$config->rights->member['opportunity']['edit']        = 'edit';
+$config->rights->member['opportunity']['view']        = 'view';
+$config->rights->member['opportunity']['funnel']      = 'funnel';
+$config->rights->member['opportunity']['pipeline']    = 'pipeline';
+$config->rights->member['opportunity']['move']        = 'move';
+$config->rights->member['opportunity']['win']         = 'win';
+$config->rights->member['opportunity']['lose']        = 'lose';
+$config->rights->member['opportunity']['delete']      = 'delete';
+$config->rights->member['opportunity']['export']      = 'export';
+
+/* Followup module rights. */
+$config->rights->member['followup']['create']     = 'create';
+$config->rights->member['followup']['edit']       = 'edit';
+$config->rights->member['followup']['delete']     = 'delete';
+$config->rights->member['followup']['timeline']   = 'timeline';
+
+/* Quote module rights. */
+$config->rights->member['quote']['browse']        = 'browse';
+$config->rights->member['quote']['create']        = 'create';
+$config->rights->member['quote']['edit']          = 'edit';
+$config->rights->member['quote']['view']          = 'view';
+$config->rights->member['quote']['sendQuote']     = 'sendQuote';
+$config->rights->member['quote']['accept']        = 'accept';
+$config->rights->member['quote']['reject']        = 'reject';
+$config->rights->member['quote']['convert']       = 'convert';
+$config->rights->member['quote']['delete']        = 'delete';
+$config->rights->member['quote']['export']        = 'export';

@@ -287,6 +287,26 @@ $lang->product->menu->normal     = 'Normal|product|browse|mode=normal';
 $lang->product->menu->developing = 'Developing|product|browse|mode=developing';
 $lang->product->menu->offline    = 'Offline|product|browse|mode=offline';
 
+/* Menu of warehouse module. */
+if(!isset($lang->warehouse)) $lang->warehouse = new stdclass();
+$lang->warehouse->menu = new stdclass();
+$lang->warehouse->menu->browse = array('link' => 'Warehouses|warehouse|browse|', 'alias' => 'create,edit,view');
+
+/* Menu of purchase module. */
+if(!isset($lang->purchase)) $lang->purchase = new stdclass();
+$lang->purchase->menu = new stdclass();
+$lang->purchase->menu->browse = 'All Purchases|purchase|browse|status=all';
+$lang->purchase->menu->wait   = 'Pending|purchase|browse|status=wait';
+$lang->purchase->menu->pass   = 'Approved|purchase|browse|status=pass';
+
+/* Menu of stock module. */
+if(!isset($lang->stock)) $lang->stock = new stdclass();
+$lang->stock->menu = new stdclass();
+$lang->stock->menu->browse   = 'Stock Overview|stock|browse|';
+$lang->stock->menu->log      = 'Stock Log|stock|log|';
+$lang->stock->menu->inbound  = 'Inbound|stock|inbound|';
+$lang->stock->menu->outbound = 'Outbound|stock|outbound|';
+
 $lang->todo = new stdclass();
 $lang->todo->menu = new stdclass();
 $lang->todo->menu->calendar        = 'Calendar|todo|calendar|';

@@ -287,6 +287,26 @@ $lang->product->menu->normal     = '正常|product|browse|mode=normal';
 $lang->product->menu->developing = '研发中|product|browse|mode=developing';
 $lang->product->menu->offline    = '下线|product|browse|mode=offline';
 
+/* Menu of warehouse module. */
+if(!isset($lang->warehouse)) $lang->warehouse = new stdclass();
+$lang->warehouse->menu = new stdclass();
+$lang->warehouse->menu->browse = array('link' => '仓库列表|warehouse|browse|', 'alias' => 'create,edit,view');
+
+/* Menu of purchase module. */
+if(!isset($lang->purchase)) $lang->purchase = new stdclass();
+$lang->purchase->menu = new stdclass();
+$lang->purchase->menu->browse = '所有采购单|purchase|browse|status=all';
+$lang->purchase->menu->wait   = '待审批|purchase|browse|status=wait';
+$lang->purchase->menu->pass   = '已审批|purchase|browse|status=pass';
+
+/* Menu of stock module. */
+if(!isset($lang->stock)) $lang->stock = new stdclass();
+$lang->stock->menu = new stdclass();
+$lang->stock->menu->browse = '库存总览|stock|browse|';
+$lang->stock->menu->log    = '出入库流水|stock|log|';
+$lang->stock->menu->inbound  = '入库|stock|inbound|';
+$lang->stock->menu->outbound = '出库|stock|outbound|';
+
 $lang->todo = new stdclass();
 $lang->todo->menu = new stdclass();
 $lang->todo->menu->calendar        = '日历|todo|calendar|';
