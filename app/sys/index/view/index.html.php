@@ -48,7 +48,7 @@ js::set('attend', commonModel::isAvailable('attend') ? 1 : 0);
         <?php echo isset($signButtons) ? $signButtons : ''?>
         <li><button id='showDesk' type='button' class='fullscreen-btn icon-desktop' data-id='home' data-toggle='tooltip' title='<?php echo $lang->index->showDesk; ?>'></button></li>
       </ul>
-      <div class='copyright'><?php printf($lang->poweredBy, $this->config->version, $this->config->version)?></div>
+      <div class='copyright'><a href='https://github.com/wenyinos/ranzhi' target='_blank'><?php echo $lang->ranzhi . ' ' . $this->config->version; ?> | PHP <?php echo PHP_VERSION; ?></a></div>
     </div>
   </div>
   <div id='home' class='fullscreen fullscreen-active'>

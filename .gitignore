@@ -1,2 +1,4 @@
 config/my.php
 tmp/
+vendor/
+composer.lock

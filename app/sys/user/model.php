@@ -33,7 +33,7 @@ class userModel extends model
             ->beginIF($mode != 'all')->andWhere('deleted')->eq('0')->fi()
 
             ->beginIF($mode == 'normal')
-            ->andWhere('locked', true)->eq('0000-00-00 00:00:00')
+            ->andWhere('locked', true)->eq('1000-01-01 00:00:00')
             ->orWhere('locked')->lt(helper::now())
             ->markRight(1)
             ->fi()
@@ -65,7 +65,7 @@ class userModel extends model
             ->where(1)
             ->beginIF(strpos($params, 'nodeleted') !== false)->andWhere('deleted')->eq('0')->fi()
             ->beginIF(strpos($params, 'noforbidden') !== false)
-            ->andWhere('locked', true)->eq('0000-00-00 00:00:00')
+            ->andWhere('locked', true)->eq('1000-01-01 00:00:00')
             ->orWhere('locked')->lt(helper::now())
             ->markRight(1)
             ->fi()
@@ -363,7 +363,7 @@ class userModel extends model
         if(!$user) return false;
 
         /* Can not login before ten minutes when user is locked. */
-        if($user->locked != '0000-00-00 00:00:00')
+        if($user->locked != '1000-01-01 00:00:00')
         {
             $dateDiff = (strtotime($user->locked) - time()) / 60;
 
@@ -382,7 +382,7 @@ class userModel extends model
             else
             {
                 $user->fails  = 0;
-                $user->locked = '0000-00-00 00:00:00';
+                $user->locked = '1000-01-01 00:00:00';
             }
         }
 
@@ -549,7 +549,7 @@ class userModel extends model
      */
     public function active($userID)
     {
-        $this->dao->update(TABLE_USER)->set('fails')->eq(0)->set('locked')->eq('0000-00-00 00:00:00')->where('id')->eq($userID)->exec();
+        $this->dao->update(TABLE_USER)->set('fails')->eq(0)->set('locked')->eq('1000-01-01 00:00:00')->where('id')->eq($userID)->exec();
         return !dao::isError();
     }
 

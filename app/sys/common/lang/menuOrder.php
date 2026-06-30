@@ -41,6 +41,17 @@ $lang->product->menuOrder[10] = 'normal';
 $lang->product->menuOrder[15] = 'developing';
 $lang->product->menuOrder[20] = 'offline';
 
+$lang->warehouse->menuOrder[5] = 'browse';
+
+$lang->purchase->menuOrder[5]  = 'browse';
+$lang->purchase->menuOrder[10] = 'wait';
+$lang->purchase->menuOrder[15] = 'pass';
+
+$lang->stock->menuOrder[5]  = 'browse';
+$lang->stock->menuOrder[10] = 'log';
+$lang->stock->menuOrder[15] = 'inbound';
+$lang->stock->menuOrder[20] = 'outbound';
+
 $lang->todo->menuOrder[5]  = 'calendar';
 $lang->todo->menuOrder[10] = 'all';
 $lang->todo->menuOrder[15] = 'assignedToOther';

@@ -131,6 +131,8 @@ class upgradeModel extends model
             case '4_0':$this->addProjPrivilege();
             case '4_1': $this->execSQL($this->getUpgradeFile('4.1'));
                 $this->updateMakeupActions();
+            case '4_2':
+            case '4_2_1': $this->execSQL($this->getUpgradeFile('4.2.1'));
             default: if(!$this->isError()) $this->loadModel('setting')->updateVersion($this->config->version);
         }
 

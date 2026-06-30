@@ -20,6 +20,8 @@ $lang->menu->crm->customer  = '客户|customer|browse|';
 $lang->menu->crm->provider  = '供应商|provider|browse|';
 $lang->menu->crm->contact   = '联系人|contact|browse|';
 $lang->menu->crm->leads     = '名单|leads|browse|mode=assignedTo';
+$lang->menu->crm->opportunity = '商机|opportunity|browse|';
+$lang->menu->crm->quote     = '报价|quote|browse|';
 $lang->menu->crm->product   = '产品|product|browse|';
 $lang->menu->crm->setting   = '设置|setting|lang|module=product&field=statusList';
 

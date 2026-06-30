@@ -180,7 +180,7 @@ class schemaModel extends model
                         {
                             $data[$row][$col] = $line;
                             /* if end of cell is not '"', then the data of cell is not end. */
-                            if($line{strlen($line) - 1} != '"') continue 2;
+                            if($line[strlen($line) - 1] != '"') continue 2;
                             $line = '';
                         }
                         else
