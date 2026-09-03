@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## 项目概述
 
-然之协同 (Ranzhi) v4.2 — 基于 ZenTaoPHP 框架的开源团队协作系统，PHP 5.6 + MySQL。
+然之协同 (Ranzhi) v4.2 — 基于 ZenTaoPHP 框架的开源团队协作系统，PHP 8.2+（推荐 8.4+）+ MySQL。
 
 ## 核心架构
 

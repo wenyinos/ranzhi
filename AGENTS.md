@@ -50,7 +50,7 @@ URL 路由：`{webRoot}/{app}/{module}-{method}.html`
 
 ## Coding Style & Naming Conventions
 
-- **PHP 版本**：5.6 ~ 7.4，不兼容 PHP 8.0+（避免使用已移除函数如 `get_magic_quotes_gpc`）
+- **PHP 版本**：8.2+（推荐 8.4+），代码须兼容 PHP 8.x（禁止使用已移除的 `get_magic_quotes_gpc`、`$str{n}` 花括号字符串访问等；详见 README「PHP 8.4+ 兼容性修复」）
 - **缩进**：4 空格，不使用 Tab
 - **控制器方法**：驼峰式命名（如 `dashboard`、`tradeReport`）
 - **视图文件**：与控制器方法同名，后缀 `.html.php`（如 `view/dashboard.html.php`）

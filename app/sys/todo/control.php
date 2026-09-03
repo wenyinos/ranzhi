@@ -149,7 +149,7 @@ class todo extends control
         }
 
         $this->view->title      = $this->lang->todo->common . $this->lang->colon . $this->lang->todo->create;
-        $this->view->date       = strftime("%Y-%m-%d", strtotime($date));
+        $this->view->date       = date("Y-m-d", strtotime($date));
         $this->view->times      = date::buildTimeList($this->config->todo->times->begin, $this->config->todo->times->end, $this->config->todo->times->delta);
         $this->view->time       = date::now();
         $this->display();      
@@ -238,7 +238,7 @@ class todo extends control
             $this->lang->todo->typeList["{$code}_bug"]  = $name . $this->lang->todo->bug;
         }
        
-        if($todo->date != '00000000') $todo->date = strftime("%Y-%m-%d", strtotime($todo->date));
+        if($todo->date != '00000000') $todo->date = date("Y-m-d", strtotime($todo->date));
         $this->view->title      = $this->lang->todo->edit;
         $this->view->position[] = $this->lang->todo->common;
         $this->view->position[] = $this->lang->todo->edit;
@@ -512,7 +512,7 @@ class todo extends control
             $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'closeModal' => 'true', 'locate' => 'reload'));
         }
 
-        if($todo->date != '00000000') $todo->date = strftime("%Y-%m-%d", strtotime($todo->date));
+        if($todo->date != '00000000') $todo->date = date("Y-m-d", strtotime($todo->date));
         $this->view->title = $this->lang->todo->assignTo;
         $this->view->todo  = $todo;
         $this->view->users = $this->loadModel('user')->getPairs('nodeleted,noforbidden,noclosed');
