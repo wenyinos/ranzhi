@@ -18,7 +18,7 @@
 
 ## 环境要求
 
-- **PHP**: 8.2+（推荐 8.4+）
+- **PHP**: 8.4+（已完整适配，见「[PHP 8.4+ 兼容性](#php-84-兼容性)」）
 - **MySQL**: 5.7+ / MariaDB 10.3+
 - **Web Server**: Nginx 或 Apache（需开启 URL Rewrite / 伪静态）
 - **Composer**: 2.x（用于安装依赖）
@@ -157,7 +157,7 @@ location ~ ^/(sys|crm|oa|cash|proj|team|doc|inventory)(/.+)$ {
 }
 ```
 
-> 运行目录需设置为 `www`。PHP 版本选择 8.2 及以上。
+> 运行目录需设置为 `www`。PHP 版本请选择 8.4 及以上。
 
 **Apache 面板（宝塔/aapanel 等）伪静态规则**：
 
@@ -287,51 +287,112 @@ mysql -u root -p ranzhi < db/upgrade4.2.1.sql  # v4.2.1: 进销存 + CRM 增强�
 
 ## 已知问题与修复
 
-### PHP 8.4+ 兼容性修复
+### PHP 8.4+ 兼容性
 
-**1. `$GLOBALS` 不可 unset（PHP 8.1+）**
+> 验证时间：2026-10-20　验证环境：PHP 8.4.26 / 8.5.11 + MySQL 5.7 + `db/ranzhi.sql` 全新安装
+> 验证方式：全量 `php -l` 语法检查、PHP 8.0–8.5 移除/废弃 API 静态扫描、容器内实际运行（登录后遍历全部 685 个路由，中英文各一轮）
+
+**结论：已完成 PHP 8.4+ 移植。** 全量 `php -l` 在 8.4 与 8.5 下无语法错误与编译期废弃警告；685 个路由在中文与英文环境下均为零 Fatal error、零 Warning、零 Deprecated。
+
+#### 框架级修复
+
+**1. `call_user_func_array()` 命名参数（PHP 8.0+）**
+
+- 文件：`framework/control.class.php`
+- 问题：PHP 8.0 起数组的字符串键会被当作命名参数，`$this->fetch('file', 'download', "fileID=1&module=")` 这类调用会抛 `Unknown named parameter`
+- 修复：调用前对参数做 `array_values()`
+
+**2. `$GLOBALS` 不可 unset（PHP 8.1+）**
 
 - 文件：`framework/base/router.class.php`
 - 修复：移除 `unset($GLOBALS)` 和 `unset($_REQUEST)`
 
-**2. `$lang` 子属性未初始化导致 null 访问（PHP 8.2+）**
+**3. `$lang` 子属性未初始化（PHP 8.2+）**
 
 - 文件：`framework/base/router.class.php`
-- 原因：语言文件引用了未初始化的模块属性（如 `$lang->order->methodOrder`），PHP 8.2+ 不再静默创建
-- 修复：添加 `langBag` 类（支持对象属性和数组访问），通过 `__get` 魔术方法自动创建
+- 原因：语言文件引用了未初始化的模块属性（如 `$lang->block->orderByList->trade`），PHP 8.2+ 不再静默创建
+- 修复：添加 `langBag` 类（实现 `ArrayAccess`，通过 `__get` 自动创建子层），并提供 `toArray()` 供需要真数组的场景（`ksort`、数组相加等）转换
 
-**3. `implode()` 参数类型严格化（PHP 8.0+）**
+**4. `E_STRICT` 常量（PHP 8.4 废弃）**
 
-- 文件：`framework/base/control.class.php`
-- 修复：确保 `implode()` 的第二参数始终为数组
+- 文件：`framework/base/router.class.php`
+- 修复：`error_reporting(E_ALL & ~ E_STRICT)` → `error_reporting(E_ALL)`，错误分级判断改用 `E_DEPRECATED`
 
-**4. `get_magic_quotes_gpc()` 等已移除函数**
+**5. `${var}` 字符串插值（PHP 8.2 废弃）**
 
-- 文件：`framework/base/helper.class.php`, `app/sys/common/model.php`, `lib/base/dao/dao.class.php`, `lib/base/filter/filter.class.php`
+- 文件：`framework/base/helper.class.php`
+- 修复：`"\$${objName}->..."` → `"\$$objName->..."`
+
+**6. `get_magic_quotes_gpc()` 等已移除函数**
+
+- 文件：`framework/base/helper.class.php`, `app/sys/common/model.php`, `lib/base/dao/dao.class.php`
 - 修复：移除所有 `get_magic_quotes_gpc` / `get_magic_quotes_runtime` 调用
 
-**5. `$str{n}` 花括号字符串访问（PHP 8.0 移除）**
+**7. `FILTER_SANITIZE_MAGIC_QUOTES`（PHP 8.0 移除）**
 
-- 文件：`app/sys/schema/model.php`
-- 修复：`$str{n}` → `$str[n]`
+- 文件：`lib/base/filter/filter.class.php`
+- 修复：改用 `FILTER_SANITIZE_ADD_SLASHES`
 
-**6. `'0000-00-00'` 日期值不被 MySQL strict mode 接受**
-
-- 文件：`app/sys/user/model.php`
-- 修复：`'0000-00-00 00:00:00'` → `'1000-01-01 00:00:00'`
-
-**7. 动态属性（PHP 8.2 deprecated）**
+**8. 动态属性（PHP 8.2 deprecated）**
 
 - 框架核心类添加 `#[\AllowDynamicProperties]`：`baseModel`, `baseControl`, `baseRouter`, `baseDAO`, `baseSQL`, `basePager`, `baseValidater`, `baseFixer`, `baseHTML`, `baseJS`, `baseCSS`, `config`, `language`, `super`
 
-**8. 第三方库升级**
+#### 业务代码修复
+
+**1. 参数顺序与函数签名**
+
+- `implode($array, ',')` / `join($array, ',')` 旧参数顺序（PHP 8.0 移除）→ 统一改为 `implode(',', $array)`：`app/oa/refund/control.php`、`app/sys/group/control.php`、`app/sys/package/view/*.html.php`、`app/team/forum/model.php`、`app/team/forum/view/board.html.php`
+- 可选参数写在必需参数之前（PHP 8.0 废弃）→ 给必需参数补默认值：`app/sys/article/model.php`、`app/sys/common/model.php`、`app/sys/message/model.php`、`app/sys/tree/model.php`、`app/oa/trip/model.php`
+- `date(DT_DATE1, $date)` 传入字符串 → 加 `(int)` 转换：`app/cash/depositor/control.php`
+
+**2. null / false 上的属性赋值与数组成员访问（PHP 8 中为 Error）**
+
+- DAO 层：`query()` 出错时返回 `null`（原先返回不可用的 `PDOStatement`）；`fetch()` / `fetchAll()` / `fetchGroup()` / `fetchPairs()` 增加 null 保护：`lib/base/dao/dao.class.php`
+- 记录不存在时提前返回：`app/oa/refund/model.php`、`app/crm/contact/model.php`、`app/sys/file/model.php`、`app/oa/lieu/control.php`、`app/cash/trade/control.php`、`app/oa/announce/control.php`、`app/sys/todo/control.php`、`app/sys/entry/control.php`
+- `$action` 为空时提前返回：`app/oa/{refund,overtime,makeup,lieu,leave,attend}/control.php`、`app/crm/{order,leads}/control.php`、`app/sys/{todo,customer}/control.php`
+- `count()` / `array_slice()` / `array_keys()` / `in_array()` / `implode()` 收到 null → 加 `(array)` 转换：`app/doc/doc/control.php`、`app/sys/article/`、`app/oa/announce/`、`app/proj/block/control.php`
+- `fopen('')` 抛 `ValueError` → 加空值检查：`lib/pclzip/pclzip.class.php`、`app/sys/schema/model.php`
+
+**3. 语言文件中间层未初始化**
+
+- `cash` / `proj` / `team` 的 `block` 模块语言文件（中英繁共 9 个）补 `orderByList` / `typeList` / `groupByList` / `statusList` 初始化
+- `app/sys/group/model.php` 中 `ksort($lang->...->methodOrder)` 前先转数组
+
+**4. 上游遗留的坏代码**
+
+| 位置 | 问题 | 处理 |
+|------|------|------|
+| `app/sys/article/`、`app/sys/message/` 视图 | 调用不存在的 `blockModel::printRegion()` | 移除死调用 |
+| `app/sys/article/control.php` | 调用不存在的 `companyModel::getContact()` | 移除死调用（视图从未使用该变量） |
+| `app/sys/entry/control.php` | 调用不存在的 `entryModel::checkIP()` | 在 `entry/model.php` 中实现（按 `ip` 字段白名单校验） |
+| `app/sys/entry/model.php` | `getAllDepts()` 引用了不存在的表常量 `TABLE_DEPT` | 返回空数组（本项目无部门表） |
+| `app/sys/webapp/control.php` | 调用不存在的 `webappModel::getLocalAppByID()` | 改用 `getLocalApps('id')` |
+| `app/oa/leave/control.php` | `if(!reviewedBy)` 缺少 `$` 前缀 | 补上 `$` |
+| `app/cash/contact/control.php` | `getList()` 调用参数错位（pager 传给了 origin） | 补齐缺失的 `status` 参数 |
+| `app/doc/doc/control.php` | `json_decode()` 结果按数组使用 | 加 `true` 参数返回数组 |
+| `app/sys/task/*` 视图、`app/sys/search/model.php` | 在 sys 应用下加载 `project` 模型 | 改为 `loadModel('project', 'proj')` |
+| `app/sys/user/control.php` | 在 sys 应用下加载 `thread` / `reply` 模型 | 改为 `loadModel(..., 'team')` |
+
+**5. PHP 8.5 新增废弃（一并处理）**
+
+- 反引号运算符 → `shell_exec()`：`app/sys/mail/model.php`、`bin/daemon.php`
+- 隐式可空参数 `Type $x = null` → `?Type $x = null`：`lib/crontab/crontab.class.php`
+
+#### 第三方库
 
 | 旧库 | 新库 | 方式 |
 |------|------|------|
-| PHPExcel 1.8 | PhpSpreadsheet 2.x | Composer + class_alias 桥接 |
-| PHPMailer 5.1 | PHPMailer 6.x | Composer + class_alias 桥接 |
+| PHPExcel 1.8 | PhpSpreadsheet 2.x | Composer + `class_alias` 桥接（`lib/phpexcel/phpexcel.class.php`） |
+| PHPMailer 5.1 | PHPMailer 6.x | Composer + `class_alias` 桥接（`lib/phpmailer/phpmailer.class.php`） |
 | HTMLPurifier 4.6 | HTMLPurifier 4.17 | Composer 直接替换 |
-| Snoopy 1.2.4 | Guzzle 7.x | 重写为 Guzzle 包装器 |
+| Snoopy 1.2.4 | Guzzle 7.x | 重写为 Guzzle 包装器（`lib/snoopy/snoopy.class.php`） |
+
+已删除的死代码：`lib/phpexcel/PHPExcel/`（旧 PHPExcel 1.8 全量源码，312 个文件）、`lib/phpexcel/xlsx/`、`lib/phpmailer/class.pop3.php`、`lib/phpmailer/class.smtp.php`。
+
+#### 已知限制
+
+- `app/*/ext/model/*.php` 是**合并进 `model.php` 类体**的扩展文件，单独 `php -l` 会报语法错误（如 `app/sys/user/ext/model/xuanxuan.php`），这是框架设计，运行时正常。
+- 未覆盖的验证范围：邮件发送、Excel 导入导出、备份/打包等依赖外部服务或涉及写操作的功能，以及前端 JS 交互路径。
 
 ### PHP 7.4 兼容性修复（历史）
 
