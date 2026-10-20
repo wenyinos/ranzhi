@@ -1223,7 +1223,7 @@ class commonModel extends model
      * @access public
      * @return bool
      */
-    public static function printLink($module, $method, $vars = '', $label, $misc = '', $print = true, $onlyBody = false, $type = '')
+    public static function printLink($module, $method, $vars = '', $label = '', $misc = '', $print = true, $onlyBody = false, $type = '')
     {
         if(!commonModel::hasPriv($module, $method)) return false;
 

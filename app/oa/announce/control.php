@@ -140,10 +140,11 @@ class announce extends control
     public function view($announceID)
     {
         $announce = $this->article->getByID($announceID);
+        if(!$announce) return false;
 
         /* fetch category for display. */
-        $category = array_slice($announce->categories, 0, 1);
-        $category = $category[0]->id;
+        $category = array_slice((array)$announce->categories, 0, 1);
+        $category = empty($category) ? 0 : $category[0]->id;
 
         $currentCategory = $this->session->articleCategory;
         if($currentCategory > 0 && isset($announce->categories[$currentCategory])) $category = $currentCategory;  
@@ -159,6 +160,7 @@ class announce extends control
         $this->view->prevAndNext = $this->article->getPrevAndNext($announce->id, $category->id);
         $this->view->modalWidth  = 800;
 
+        if(!is_array($announce->readers)) $announce->readers = array();
         if(!in_array($this->app->user->account, $announce->readers)) $announce->readers[] = $this->app->user->account;
         $readers = array();
         foreach($announce->readers as $reader) $readers[] = zget($users, $reader);

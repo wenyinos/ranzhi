@@ -341,7 +341,7 @@ class chat extends control
         { 
             $chat = $this->chat->create($gid, $name, $type, $members, $subjectID, $public);
 
-            $userList = $this->chat->getUsersToNotify(array_values($chat->members));
+            $userList = $this->chat->getUsersToNotify(array_values((array)$chat->members));
     
             $data = new stdclass();
             $data->module = $this->moduleName;
@@ -396,7 +396,7 @@ class chat extends control
 
         $chat = $this->chat->setAdmin($gid, $admins, $isAdmin);
 
-        $userList = $this->chat->getUsersToNotify(array_values($chat->members));
+        $userList = $this->chat->getUsersToNotify(array_values((array)$chat->members));
 
         $data = new stdclass();
         $data->module = $this->moduleName;
@@ -451,7 +451,7 @@ class chat extends control
         $this->chat->joinChat($gid, $this->session->user->id, $join);
 
         $chat = $this->chat->getByGID($gid, true);
-        $userList = $this->chat->getUsersToNotify(array_values($chat->members));
+        $userList = $this->chat->getUsersToNotify(array_values((array)$chat->members));
 
         $data = new stdclass();
         $data->module = $this->moduleName;
@@ -512,7 +512,7 @@ class chat extends control
         $chat->name = $name;
         $chat = $this->chat->update($chat);
 
-        $userList = $this->chat->getUsersToNotify(array_values($chat->members));
+        $userList = $this->chat->getUsersToNotify(array_values((array)$chat->members));
 
         $data = new stdclass();
         $data->module = $this->moduleName;
@@ -576,7 +576,7 @@ class chat extends control
         $chat->committers = $committers;
         $chat = $this->chat->update($chat);
 
-        $userList = $this->chat->getUsersToNotify(array_values($chat->members));
+        $userList = $this->chat->getUsersToNotify(array_values((array)$chat->members));
 
         $data = new stdclass();
         $data->module = $this->moduleName;
@@ -627,7 +627,7 @@ class chat extends control
         $chat->public = $public ? 1 : 0;
         $chat = $this->chat->update($chat);
 
-        $userList = $this->chat->getUsersToNotify(array_values($chat->members));
+        $userList = $this->chat->getUsersToNotify(array_values((array)$chat->members));
 
         $data = new stdclass();
         $data->module = $this->moduleName;
@@ -759,7 +759,7 @@ class chat extends control
         foreach($members as $member) $this->chat->joinChat($gid, $member, $join);
 
         $chat->members = $this->chat->getMemberListByGID($gid);
-        $userList = $this->chat->getUsersToNotify(array_values($chat->members));
+        $userList = $this->chat->getUsersToNotify(array_values((array)$chat->members));
 
         $data = new stdclass();
         $data->module = $this->moduleName;

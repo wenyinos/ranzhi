@@ -53,7 +53,6 @@ class article extends control
         $this->view->category  = $category;
         $this->view->articles  = $articles;
         $this->view->pager     = $pager;
-        $this->view->contact   = $this->loadModel('company')->getContact();
 
         $this->display();
     }
@@ -172,8 +171,8 @@ class article extends control
         $article  = $this->article->getByID($articleID);
 
         /* fetch category for display. */
-        $category = array_slice($article->categories, 0, 1);
-        $category = $category[0]->id;
+        $category = array_slice((array)$article->categories, 0, 1);
+        $category = empty($category) ? 0 : $category[0]->id;
 
         $currentCategory = $this->session->articleCategory;
         if($currentCategory > 0 && isset($article->categories[$currentCategory])) $category = $currentCategory;  
@@ -190,7 +189,6 @@ class article extends control
         $this->view->article     = $article;
         $this->view->prevAndNext = $this->article->getPrevAndNext($article->id, $category->id);
         $this->view->category    = $category;
-        $this->view->contact     = $this->loadModel('company')->getContact();
 
         $this->dao->update(TABLE_ARTICLE)->set('views = views + 1')->where('id')->eq($articleID)->exec(false);
 

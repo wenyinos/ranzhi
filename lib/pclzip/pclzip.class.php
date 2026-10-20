@@ -2349,6 +2349,16 @@
       return PclZip::errorCode();
     }
 
+    // ----- Check zip name
+    if (empty($this->zipname))
+    {
+      // ----- Error log
+      PclZip::privErrorLog(PCLZIP_ERR_READ_OPEN_FAIL, 'Zip file name is empty');
+
+      // ----- Return
+      return PclZip::errorCode();
+    }
+
     // ----- Open the zip file
     if (($this->zip_fd = @fopen($this->zipname, $p_mode)) == 0)
     {

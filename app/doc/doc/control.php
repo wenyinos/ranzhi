@@ -475,7 +475,7 @@ class doc extends control
     public function ajaxFixedMenu($libID, $type = 'fixed')
     {
         $customMenus = $this->loadModel('setting')->getItem("owner={$this->app->user->account}&app=sys&module=common&section=customMenu&key=doc");
-        if($customMenus) $customMenus = json_decode($customMenus);
+        if($customMenus) $customMenus = json_decode($customMenus, true);
 
         if(empty($customMenus) and $type == 'remove') $this->send(array('result' => 'success'));
 
@@ -489,7 +489,7 @@ class doc extends control
 
         $customMenu = new stdclass();
         $customMenu->name  = "custom{$libID}";
-        $customMenu->order = count($customMenus); 
+        $customMenu->order = count((array)$customMenus); 
         if($type == 'fixed') $customMenus[] = $customMenu;
 
         $this->setting->setItem("{$this->app->user->account}.sys.common.customMenu.doc", json_encode($customMenus));

@@ -21,6 +21,8 @@ class refundModel extends model
     public function getByID($ID)
     {
         $refund  = $this->dao->select('*')->from(TABLE_REFUND)->where('id')->eq($ID)->fetch();
+        if(!$refund) return $refund;
+
         $details = $this->dao->select('*')->from(TABLE_REFUND)->where('parent')->eq($ID)->fetchAll('id');
         $refund->detail = $details;
         $refund->files  = $this->loadModel('file')->getByObject('refund', $ID);

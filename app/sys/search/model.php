@@ -259,7 +259,7 @@ class searchModel extends model
             $users['$@me'] = $this->lang->search->me;
         }
         if($hasProduct) $products = array('' => '') + $this->loadModel('product')->getPairs();
-        if($hasProject) $projects = array('' => '') + $this->loadModel('project')->getPairs();
+        if($hasProject) $projects = array('' => '') + $this->loadModel('project', 'proj')->getPairs();
 
         foreach($fields as $fieldName)
         {

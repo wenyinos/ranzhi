@@ -309,7 +309,7 @@ class treeModel extends model
      * @access public
      * @return string   the html code of the tree menu.
      */
-    public function getTreeMenu($type = 'article', $startCategoryID = 0, $userFunc, $root = 0)
+    public function getTreeMenu($type = 'article', $startCategoryID = 0, $userFunc = '', $root = 0)
     {
         $treeMenu   = array();
         $categories = array();

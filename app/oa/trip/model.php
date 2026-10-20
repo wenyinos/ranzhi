@@ -71,7 +71,7 @@ class tripModel extends model
      * @access public
      * @return array
      */
-    public function getAllMonth($type = 'trip', $mode)
+    public function getAllMonth($type = 'trip', $mode = '')
     {
         if($mode == 'department')
         {
@@ -275,7 +275,7 @@ class tripModel extends model
      * @access public
      * @return bool
      */
-    public function isTrip($type = 'trip', $date, $account)
+    public function isTrip($type = 'trip', $date = '', $account = '')
     {
         static $tripList   = array();
         static $egressList = array();

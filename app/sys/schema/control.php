@@ -81,7 +81,7 @@ class schema extends control
         $this->view->subtitle   = $schema->name;
         $this->view->modalWidth = 900;
         $this->view->schema     = $reversedSchema;
-        $this->view->maxColumn  = max(array_keys($reversedSchema));
+        $this->view->maxColumn  = empty($reversedSchema) ? 0 : max(array_keys($reversedSchema));
 
         $this->display();
     }

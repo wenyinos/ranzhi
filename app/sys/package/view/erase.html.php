@@ -17,7 +17,7 @@
     <h3><?php echo $title;?></h3>
     <?php if($removeCommands):?>
     <p><strong><?php echo $lang->package->unremovedFiles;?></strong></p>
-    <p><?php echo join($removeCommands, '<br />');?></p>
+    <p><?php echo join('<br />', (array)$removeCommands);?></p>
     <?php endif;?>
     <p class='text-center'><?php echo html::a(inlink('browse', 'type=available'), $lang->package->viewAvailable, "class='btn'");?></p>
   </div>

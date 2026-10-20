@@ -144,6 +144,7 @@ class block extends control
         $rights = $this->app->user->rights;
         $expensePriv = (isset($rights['tradebrowse']['out']) or $this->app->user->admin == 'super') ? true : false; 
 
+        if(!is_object($this->params)) $this->params = new stdclass();
         $this->params->type = !empty($this->params->type) ? $this->params->type : 'all';
         $this->view->trades = $this->dao->select('*')->from(TABLE_TRADE)
             ->where('1=1')

@@ -22,16 +22,22 @@ $lang->block->availableBlocks->trade     = 'Trade';
 $lang->block->availableBlocks->provider  = 'Suppliers';
 $lang->block->availableBlocks->report    = 'Report';
 
-$this->lang->block->orderByList->trade['id_asc']  = 'ID ASC';
-$this->lang->block->orderByList->trade['id_desc'] = 'ID DESC';
+$lang->block->orderByList = new stdclass();
+$lang->block->orderByList->trade = array();
+$lang->block->orderByList->trade['id_asc']  = 'ID ASC';
+$lang->block->orderByList->trade['id_desc'] = 'ID DESC';
 
-$this->lang->block->typeList->trade['all']  = 'All';
-$this->lang->block->typeList->trade['in']   = 'Income';
-$this->lang->block->typeList->trade['out']  = 'Expense';
+$lang->block->typeList = new stdclass();
+$lang->block->typeList->trade = array();
+$lang->block->typeList->trade['all']  = 'All';
+$lang->block->typeList->trade['in']   = 'Income';
+$lang->block->typeList->trade['out']  = 'Expense';
 
-$this->lang->block->groupByList = new stdclass();
-$this->lang->block->groupByList->trade['category'] = 'by category';
-$this->lang->block->groupByList->trade['dept']     = 'by deptment';
+$lang->block->groupByList = new stdclass();
+$lang->block->groupByList->trade = array();
+$lang->block->groupByList->trade['category'] = 'by category';
+$lang->block->groupByList->trade['dept']     = 'by deptment';
 
-$this->lang->block->orderByList->provider['id_asc']  = 'ID ASC';
-$this->lang->block->orderByList->provider['id_desc'] = 'ID DESC';
+$lang->block->orderByList->provider = array();
+$lang->block->orderByList->provider['id_asc']  = 'ID ASC';
+$lang->block->orderByList->provider['id_desc'] = 'ID DESC';

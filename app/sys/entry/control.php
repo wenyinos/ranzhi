@@ -188,6 +188,8 @@ class entry extends control
         }
 
         $entry = $this->entry->getByCode($code);
+        if(!$entry) return false;
+
         if($entry->size != 'max')
         {
             $size = json_decode($entry->size);
@@ -220,6 +222,8 @@ class entry extends control
         }
 
         $entry = $this->entry->getByCode($code);
+        if(!$entry) return false;
+
         if($entry->size != 'max')
         {
             $size = json_decode($entry->size);
@@ -244,6 +248,7 @@ class entry extends control
     public function edit($code)
     {
         $entry = $this->entry->getByCode($code);
+        if(!$entry) return false;
 
         if(!empty($_POST))
         {
@@ -622,6 +627,8 @@ class entry extends control
 
         /* Get zentao config. */
         $zentaoConfig = $this->loadModel('sso')->getZentaoServerConfig($zentaoUrl);
+        if(!$zentaoConfig) return false;
+
         $zentaoConfig->sessionID = $sessionID;
 
         if($_POST)

@@ -43,7 +43,7 @@
     if($removeCommands)
     {
         echo "<p class='strong'>{$lang->package->unremovedFiles}</p>";
-        echo join($removeCommands, '<br />');
+        echo join('<br />', (array)$removeCommands);
     }
     echo "<p class='text-center'>" . html::a(inlink('browse', 'type=available'), $lang->package->viewAvailable, "class='btn'") . '</p>';
     ?>

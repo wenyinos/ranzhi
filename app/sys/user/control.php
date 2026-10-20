@@ -219,7 +219,7 @@ class user extends control
         /* Load the forum lang to change the pager lang items. */
         $this->app->loadLang('forum');
 
-        $this->view->threads = $this->loadModel('thread')->getByUser($this->app->user->account, $pager);
+        $this->view->threads = $this->loadModel('thread', 'team')->getByUser($this->app->user->account, $pager);
         $this->view->pager   = $pager;
 
         $this->display();
@@ -242,7 +242,7 @@ class user extends control
         /* Load the thread lang thus to rewrite the page lang items. */
         $this->app->loadLang('thread');    
 
-        $this->view->replies = $this->loadModel('reply')->getByUser($this->app->user->account, $pager);
+        $this->view->replies = $this->loadModel('reply', 'team')->getByUser($this->app->user->account, $pager);
         $this->view->pager   = $pager;
 
         $this->display();

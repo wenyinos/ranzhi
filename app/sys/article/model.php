@@ -63,7 +63,7 @@ class articleModel extends model
      * @access public
      * @return array
      */
-    public function getList($type, $categories, $mode = null, $param = null, $orderBy, $pager = null)
+    public function getList($type, $categories, $mode = null, $param = null, $orderBy = '', $pager = null)
     {
         $moduleQuery = $type . 'Query';
         if($this->session->$moduleQuery == false) $this->session->set($moduleQuery, ' 1 = 1');

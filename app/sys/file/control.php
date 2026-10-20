@@ -443,6 +443,8 @@ class file extends control
      */
     static public function sort($a, $b)
     {
+        if(!is_array($a) or !is_array($b)) return 0;
+
         if(isset($a['is_dir']) && !isset($b['is_dir']))
         {
             return -1;

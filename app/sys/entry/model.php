@@ -324,6 +324,19 @@ class entryModel extends model
     {
         return $this->config->entry->$entry->key;
     }
+
+    /**
+     * Check the remote ip is allowed by the entry or not.
+     * 
+     * @param  string $entry 
+     * @access public
+     * @return bool
+     */
+    public function checkIP($entry)
+    {
+        if(empty($entry->ip) or $entry->ip == '*') return true;
+        return in_array($_SERVER['REMOTE_ADDR'], explode(',', $entry->ip));
+    }
     /**
      * Create a key.
      * 
@@ -343,7 +356,7 @@ class entryModel extends model
      */
     public function getAllDepts()
     {
-        return $this->dao->select('*')->from(TABLE_DEPT)->fetchAll();
+        return array();
     }
 
     /**

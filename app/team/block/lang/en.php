@@ -20,5 +20,7 @@ $lang->block->availableBlocks = new stdclass();
 $lang->block->availableBlocks->blog   = 'Latest Blog';
 $lang->block->availableBlocks->thread = 'Threads';
 
+$lang->block->typeList = new stdclass();
+$lang->block->typeList->thread = array();
 $lang->block->typeList->thread['new']   = 'latest Thread';
 $lang->block->typeList->thread['stick'] = 'Sticked Threads';

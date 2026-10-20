@@ -136,6 +136,8 @@ class lieu extends control
     public function view($id, $type = '')
     {
         $lieu = $this->lieu->getByID($id);
+        if(!$lieu) return false;
+
         $lieu->overtimeList = explode(',', trim($lieu->overtime, ','));
 
         $overtimePairs = array();
@@ -356,6 +358,8 @@ class lieu extends control
 
         /* Get action info. */
         $action          = $this->loadModel('action')->getById($actionID);
+        if(!$action) return false;
+
         $history         = $this->action->getHistory($actionID);
         $action->history = isset($history[$actionID]) ? $history[$actionID] : array();
 

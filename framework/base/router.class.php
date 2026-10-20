@@ -614,7 +614,7 @@ class baseRouter
      */
     public function setDebug()
     {
-        if(!empty($this->config->debug)) error_reporting(E_ALL & ~ E_STRICT);
+        if(!empty($this->config->debug)) error_reporting(E_ALL);
     }
 
     /**
@@ -2174,7 +2174,7 @@ class baseRouter
          * 如果debug > 1，显示warning, notice级别的错误。
          * If the debug > 1, show warning, notice error.
          **/
-        if($level == E_NOTICE or $level == E_WARNING or $level == E_STRICT or $level == 8192) // 8192: E_DEPRECATED
+        if($level == E_NOTICE or $level == E_WARNING or $level == E_DEPRECATED)
         {
             if(!empty($this->config->debug) and $this->config->debug > 1)
             {
@@ -2270,6 +2270,12 @@ class langBag implements \ArrayAccess
     public function offsetGet($o): mixed   { return $this->data[$o] ?? null; }
     public function offsetSet($o, $v): void { $this->data[$o] = $v; }
     public function offsetUnset($o): void   { unset($this->data[$o]); }
+    public function toArray(): array
+    {
+        $result = array();
+        foreach($this->data as $key => $value) $result[$key] = $value instanceof self ? $value->toArray() : $value;
+        return $result;
+    }
 }
 
 #[\AllowDynamicProperties]

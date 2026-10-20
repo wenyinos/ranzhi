@@ -22,16 +22,22 @@ $lang->block->availableBlocks->trade     = '賬目';
 $lang->block->availableBlocks->provider  = '供應商';
 $lang->block->availableBlocks->report    = '報表';
 
-$this->lang->block->orderByList->trade['id_asc']  = 'ID 遞增';
-$this->lang->block->orderByList->trade['id_desc'] = 'ID 遞減';
+$lang->block->orderByList = new stdclass();
+$lang->block->orderByList->trade = array();
+$lang->block->orderByList->trade['id_asc']  = 'ID 遞增';
+$lang->block->orderByList->trade['id_desc'] = 'ID 遞減';
 
-$this->lang->block->typeList->trade['all']  = '全部';
-$this->lang->block->typeList->trade['in']   = '收入';
-$this->lang->block->typeList->trade['out']  = '支出';
+$lang->block->typeList = new stdclass();
+$lang->block->typeList->trade = array();
+$lang->block->typeList->trade['all']  = '全部';
+$lang->block->typeList->trade['in']   = '收入';
+$lang->block->typeList->trade['out']  = '支出';
 
-$this->lang->block->groupByList = new stdclass();
-$this->lang->block->groupByList->trade['category'] = '按科目統計';
-$this->lang->block->groupByList->trade['dept']     = '按部門統計';
+$lang->block->groupByList = new stdclass();
+$lang->block->groupByList->trade = array();
+$lang->block->groupByList->trade['category'] = '按科目統計';
+$lang->block->groupByList->trade['dept']     = '按部門統計';
 
-$this->lang->block->orderByList->provider['id_asc']  = 'ID 遞增';
-$this->lang->block->orderByList->provider['id_desc'] = 'ID 遞減';
+$lang->block->orderByList->provider = array();
+$lang->block->orderByList->provider['id_asc']  = 'ID 遞增';
+$lang->block->orderByList->provider['id_desc'] = 'ID 遞減';

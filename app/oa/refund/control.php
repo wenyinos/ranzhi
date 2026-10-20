@@ -414,7 +414,7 @@ class refund extends control
      */
     public function createTrade($refundID)
     {
-        if(!commonModel::hasPriv('refund', 'reimburse')) $this->deny('refund', 'reimburse');
+        if(!commonModel::hasPriv('refund', 'reimburse')) $this->loadModel('common', 'sys')->deny('refund', 'reimburse');
 
         $this->app->loadLang('trade', 'cash');
 
@@ -498,7 +498,7 @@ class refund extends control
 
         $refundCategories = $this->dao->select('*')->from(TABLE_CATEGORY)->where('type')->eq('out')->andWhere('refund')->eq(1)->fetchAll('id');
         $refundCategories = array_keys($refundCategories);
-        $refundCategories = implode($refundCategories, ',');
+        $refundCategories = implode(',', $refundCategories);
 
         $this->view->title            = $this->lang->refund->setCategory;
         $this->view->expenseList      = $expenseList;
@@ -578,6 +578,8 @@ class refund extends control
 
         /* Get action info. */
         $action          = $this->loadModel('action')->getById($actionID);
+        if(!$action) return false;
+
         $history         = $this->action->getHistory($actionID);
         $action->history = isset($history[$actionID]) ? $history[$actionID] : array();
 

@@ -482,6 +482,8 @@ class trade extends control
     public function detail($tradeID, $mode = '')
     {
         $trade = $this->trade->getByID($tradeID);
+        if(!$trade) return false;
+
         if($trade->type == 'out') $this->loadModel('tree')->checkRight($trade->category);
 
         if($_POST)

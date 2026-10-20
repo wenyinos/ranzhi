@@ -208,7 +208,7 @@ class depositor extends control
         $balance->createdBy   = $this->app->user->account;
         $balance->createdDate = helper::now();
         $balance->money       = $money;
-        $balance->date        = date(DT_DATE1, $date);
+        $balance->date        = date(DT_DATE1, (int)$date);
 
         $this->loadModel('balance', 'cash')->create($balance);
         if(dao::isError())$this->send(array('result' => 'fail', 'message' => dao::getError()));

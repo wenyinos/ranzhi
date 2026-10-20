@@ -85,6 +85,7 @@ class control extends baseControl
          * Parse the params, create the $module control object. 
          */
         if(!is_array($params)) parse_str($params, $params);
+        $params = array_values($params);
         $module = new $className($moduleName, $methodName, $appName);
 
         /**

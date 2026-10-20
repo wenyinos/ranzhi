@@ -45,12 +45,16 @@ $lang->block->orderByList->project['begin_desc']       = '開始時間遞減';
 $lang->block->orderByList->project['end_asc']          = '結束時間遞增';
 $lang->block->orderByList->project['end_desc']         = '結束時間遞減';
 
+$lang->block->typeList = new stdclass();
+$lang->block->typeList->task = array();
 $lang->block->typeList->task['assignedTo'] = '指派給我';
 $lang->block->typeList->task['createdBy']  = '由我創建';
 $lang->block->typeList->task['finishedBy'] = '由我完成';
 $lang->block->typeList->task['closedBy']   = '由我關閉';
 $lang->block->typeList->task['canceledBy'] = '由我取消';
 
+$lang->block->statusList = new stdclass();
+$lang->block->statusList->project = array();
 $lang->block->statusList->project['involved'] = '我參與的';
 $lang->block->statusList->project['doing']    = '進行中';
 $lang->block->statusList->project['finished'] = '已完成';

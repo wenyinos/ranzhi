@@ -133,6 +133,8 @@ class schemaModel extends model
      */
     public function parseCSV($fileName = '')
     {
+        if(empty($fileName) or !is_file($fileName)) return array();
+
         $handle = fopen($fileName, 'r');
         $col    = -1;
         $row    = 0;

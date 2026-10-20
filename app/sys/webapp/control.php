@@ -86,7 +86,8 @@ class webapp extends control
         $this->view->title   = $this->lang->webapp->common . $this->lang->colon . $this->lang->webapp->edit;
         $this->view->modules = $this->loadModel('tree')->getOptionMenu(0, 'webapp');
         $this->view->users   = $this->loadModel('user')->getPairs();
-        $this->view->webapp  = $type == 'local' ? $this->webapp->getLocalAppByID($webappID) : $this->webapp->getAppInfoByAPI($webappID)->webapp;
+        $localApps           = $this->webapp->getLocalApps('id');
+        $this->view->webapp  = $type == 'local' ? zget($localApps, $webappID) : $this->webapp->getAppInfoByAPI($webappID)->webapp;
         $this->view->type    = $type;
         $this->display();
     }

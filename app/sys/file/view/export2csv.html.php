@@ -11,6 +11,7 @@
  */
 ?>
 <?php
+$fields = (array)$fields;
 echo '"'. implode('","', $fields) . '"' . "\n";
 foreach($rows as $row)
 {

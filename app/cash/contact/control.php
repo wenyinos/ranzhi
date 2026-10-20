@@ -46,7 +46,7 @@ class contact extends control
         $this->app->loadClass('pager', $static = true);
         $pager = new pager($recTotal, $recPerPage, $pageID);
 
-        $contacts = $this->contact->getList($customer = '', $relation = 'provider',  $mode, $orderBy, $pager);
+        $contacts = $this->contact->getList($customer = '', $relation = 'provider', $mode, 'normal', '', $orderBy, $pager);
         $this->session->set('contactQueryCondition', $this->dao->get());
         $this->session->set('contactList', $this->app->getURI(true));
         $this->session->set('customerList', $this->app->getURI(true));

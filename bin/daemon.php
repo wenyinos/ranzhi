@@ -12,8 +12,8 @@
  */
 $basePath = dirname(dirname(__FILE__));
 $username = 'www-data'; // Use the run user of your web server as username.
-$xuanxuan = `ps aux|grep 'php $basePath/app/xuanxuan/server.php'|grep -v 'grep'`;
+$xuanxuan = shell_exec("ps aux|grep 'php $basePath/app/xuanxuan/server.php'|grep -v 'grep'");
 if(empty($xuanxuan))
 {
-    echo `sudo sudo -u $username $basePath/app/xuanxuan/server.php >> $basePath/tmp/log/xuanxuan.log &`;
+    echo shell_exec("sudo sudo -u $username $basePath/app/xuanxuan/server.php >> $basePath/tmp/log/xuanxuan.log &");
 }

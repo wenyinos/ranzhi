@@ -21,7 +21,7 @@
       <tr>
         <th class='w-100px'><?php echo $lang->article->category;?></th>
         <td class='w-p40'>
-        <?php echo html::select("categories[]", $categories, array_keys($article->categories), "multiple='multiple' class='form-control chosen'");?>
+        <?php echo html::select("categories[]", $categories, array_keys((array)$article->categories), "multiple='multiple' class='form-control chosen'");?>
         </td><td></td>
       </tr>
       <tr>

@@ -718,7 +718,7 @@ class projectModel extends model
             }
         }
 
-        return in_array($this->app->user->account, $projects[$projectID]->accountList);
+        return in_array($this->app->user->account, (array)$projects[$projectID]->accountList);
     }
 
     /**

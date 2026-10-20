@@ -231,7 +231,7 @@ class leave extends control
         /* check privilage. */
         $this->app->loadModuleConfig('attend');
         $reviewedBy = $this->leave->getReviewedBy();
-        if(!reviewedBy)
+        if(!$reviewedBy)
         {
             $createdUser = $this->loadModel('user')->getByAccount($leave->createdBy);
             $dept        = $this->loadModel('tree')->getByID($createdUser->dept);
@@ -321,6 +321,8 @@ class leave extends control
 
         /* Get action info. */
         $action          = $this->loadModel('action')->getById($actionID);
+        if(!$action) return false;
+
         $history         = $this->action->getHistory($actionID);
         $action->history = isset($history[$actionID]) ? $history[$actionID] : array();
 

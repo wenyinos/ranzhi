@@ -1,7 +1,7 @@
 <?php 
 include '../../common/view/header.html.php';
 
-$path = array_keys($category->pathNames);
+$path = array_keys((array)$category->pathNames);
 js::set('path',  json_encode($path));
 
 include '../../../sys/common/view/treeview.html.php';
@@ -39,6 +39,6 @@ include '../../../sys/common/view/treeview.html.php';
       <footer class='clearfix'><?php $pager->show('right', 'short');?></footer>
     </div>
   </div>
-  <div class='col-md-3'><side class='page-side'><?php $this->block->printRegion($layouts, 'article_browse', 'side');?></side></div>
+  <div class='col-md-3'><side class='page-side'></side></div>
 </div>
 <?php include '../../common/view/footer.html.php';?>

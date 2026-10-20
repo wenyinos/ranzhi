@@ -27,6 +27,7 @@ $config->order->statusClassList['closed']   = '';
 
 global $lang, $app;
 $app->loadLang('customer');
+$app->loadLang('order', 'crm');
 $config->order->search['module'] = 'order';
 
 $config->order->search['fields']['o.customer']      = $lang->order->customer;
@@ -49,7 +50,8 @@ $config->order->search['fields']['o.editedDate']    = $lang->order->editedDate;
 
 $config->order->search['params']['o.customer']      = array('operator' => '=',  'control' => 'select', 'values' => 'set in control');
 $config->order->search['params']['o.product']       = array('operator' => 'include',  'control' => 'select', 'values' => 'set in control');
-$config->order->search['params']['o.status']        = array('operator' => '=',  'control' => 'select', 'values' => array('' => '') + $lang->order->statusList);
+$statusList = $lang->order->statusList instanceof langBag ? $lang->order->statusList->toArray() : (array)$lang->order->statusList;
+$config->order->search['params']['o.status']        = array('operator' => '=',  'control' => 'select', 'values' => array('' => '') + $statusList);
 $config->order->search['params']['o.plan']          = array('operator' => '>=', 'control' => 'input',  'values' => '');
 $config->order->search['params']['o.real']          = array('operator' => '>=', 'control' => 'input',  'values' => '');
 $config->order->search['params']['o.id']            = array('operator' => '=',  'control' => 'input',  'values' => '');

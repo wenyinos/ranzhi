@@ -669,9 +669,9 @@ class baseDAO
      */
     public function query($sql = '')
     {
-        /* 如果有错误，返回一个空的PDOStatement对象，确保后续方法能够执行。*/
-        /* If any error, return an empty statement object to make sure the remain method to execute. */
-        if(!empty(dao::$errors)) return new PDOStatement();   
+        /* 如果有错误，返回null，确保后续方法能够安全执行。*/
+        /* If any error, return null to make sure the remain method to execute. */
+        if(!empty(dao::$errors)) return null;
 
         if($sql) $this->sqlobj->sql = $sql;
         $sql = $this->processSQL();
@@ -773,10 +773,15 @@ class baseDAO
      */
     public function fetch($field = '')
     {
-        if(empty($field)) return $this->query()->fetch();
+        if(empty($field))
+        {
+            $stmt = $this->query();
+            return $stmt ? $stmt->fetch() : false;
+        }
 
         $this->setFields($field);
-        $result = $this->query()->fetch(PDO::FETCH_OBJ);
+        $stmt   = $this->query();
+        $result = $stmt ? $stmt->fetch(PDO::FETCH_OBJ) : false;
         if($result)
         {
             return $result->$field;
@@ -795,6 +800,7 @@ class baseDAO
     public function fetchAll($keyField = '')
     {
         $stmt = $this->query();
+        if(!$stmt) return array();
         if(empty($keyField)) return $stmt->fetchAll();
         $rows = array();
         while($row = $stmt->fetch()) $rows[$row->$keyField] = $row;
@@ -813,6 +819,7 @@ class baseDAO
     public function fetchGroup($groupField, $keyField = '')
     {
         $stmt = $this->query();
+        if(!$stmt) return array();
         $rows = array();
         while($row = $stmt->fetch())
         {
@@ -841,6 +848,7 @@ class baseDAO
         $pairs = array();
         $ready = false;
         $stmt  = $this->query();
+        if(!$stmt) return array();
         while($row = $stmt->fetch(PDO::FETCH_ASSOC))
         {
             if(!$ready)

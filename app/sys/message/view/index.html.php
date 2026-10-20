@@ -103,6 +103,6 @@
       </div>
     </div>
   </div>
-  <div class='col-md-3'><?php $this->block->printRegion($layouts, 'message_index', 'side');?></div>
+  <div class='col-md-3'></div>
 </div>
 <?php include '../../common/view/footer.html.php';?>

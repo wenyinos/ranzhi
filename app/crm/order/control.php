@@ -332,6 +332,8 @@ class order extends control
 
         /* Get action info. */
         $action          = $this->loadModel('action')->getById($actionID);
+        if(!$action) return false;
+
         $history         = $this->action->getHistory($actionID);
         $action->history = isset($history[$actionID]) ? $history[$actionID] : array();
 

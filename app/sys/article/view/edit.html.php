@@ -24,7 +24,7 @@
         <th style='width: 100px'><?php echo $lang->article->category;?></th>
         <td style='width: 40%'>
         <?php 
-        echo html::select("categories[]", $categories, array_keys($article->categories), "multiple='multiple' class='form-control chosen'");
+        echo html::select("categories[]", $categories, array_keys((array)$article->categories), "multiple='multiple' class='form-control chosen'");
         ?>
         </td>
         <td>

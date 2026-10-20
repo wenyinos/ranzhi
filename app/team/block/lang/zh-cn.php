@@ -20,5 +20,7 @@ $lang->block->availableBlocks = new stdclass();
 $lang->block->availableBlocks->blog   = '最新博客';
 $lang->block->availableBlocks->thread = '帖子列表';
 
+$lang->block->typeList = new stdclass();
+$lang->block->typeList->thread = array();
 $lang->block->typeList->thread['new']   = '最新帖子';
 $lang->block->typeList->thread['stick'] = '置顶帖子';

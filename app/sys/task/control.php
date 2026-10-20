@@ -614,7 +614,7 @@ class task extends control
         $this->view->groupBy     = $groupBy;
         $this->view->orderBy     = $orderBy;
         $this->view->projectID   = $projectID;
-        $this->view->projects    = $this->project->getPairs();
+        $this->view->projects    = $this->loadModel('project', 'proj')->getPairs();
         $this->view->project     = $project;
         $this->view->users       = $this->loadModel('user')->getPairs();
         $this->view->colWidth    = 100/min(6, max(2, count($tasks)));
@@ -655,7 +655,7 @@ class task extends control
         $this->view->groupBy   = $groupBy;
         $this->view->orderBy   = $groupBy;
         $this->view->projectID = $projectID;
-        $this->view->projects  = $this->project->getPairs();
+        $this->view->projects  = $this->loadModel('project', 'proj')->getPairs();
         $this->view->project   = $project;
         $this->view->users     = $this->loadModel('user')->getPairs();
         $this->view->backLink  = html::a($backURL, $this->lang->goback);

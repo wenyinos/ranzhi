@@ -319,8 +319,9 @@ class groupModel extends model
         $this->lang->resource = new stdclass();
 
         /* sort moduleOrder. */
-        ksort($this->lang->moduleOrder, SORT_ASC);
-        foreach($this->lang->moduleOrder as $moduleName)
+        $moduleOrder = $this->lang->moduleOrder instanceof langBag ? $this->lang->moduleOrder->toArray() : (array)$this->lang->moduleOrder;
+        ksort($moduleOrder, SORT_ASC);
+        foreach($moduleOrder as $moduleName)
         {
             $resource = $resources->$moduleName;
             //unset($resources->$moduleName);
@@ -339,8 +340,9 @@ class groupModel extends model
 
             if(isset($this->lang->$moduleName->methodOrder))
             {
-                ksort($this->lang->$moduleName->methodOrder, SORT_ASC);
-                foreach($this->lang->$moduleName->methodOrder as $key)
+                $methodOrder = $this->lang->$moduleName->methodOrder instanceof langBag ? $this->lang->$moduleName->methodOrder->toArray() : (array)$this->lang->$moduleName->methodOrder;
+                ksort($methodOrder, SORT_ASC);
+                foreach($methodOrder as $key)
                 {
                     if(isset($resources[$key]))
                     {

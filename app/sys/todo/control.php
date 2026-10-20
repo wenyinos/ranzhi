@@ -238,6 +238,7 @@ class todo extends control
             $this->lang->todo->typeList["{$code}_bug"]  = $name . $this->lang->todo->bug;
         }
        
+        if(!$todo) return false;
         if($todo->date != '00000000') $todo->date = date("Y-m-d", strtotime($todo->date));
         $this->view->title      = $this->lang->todo->edit;
         $this->view->position[] = $this->lang->todo->common;
@@ -512,6 +513,7 @@ class todo extends control
             $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'closeModal' => 'true', 'locate' => 'reload'));
         }
 
+        if(!$todo) return false;
         if($todo->date != '00000000') $todo->date = date("Y-m-d", strtotime($todo->date));
         $this->view->title = $this->lang->todo->assignTo;
         $this->view->todo  = $todo;
@@ -550,6 +552,8 @@ class todo extends control
 
         /* Get action info. */
         $action          = $this->loadModel('action')->getById($actionID);
+        if(!$action) return false;
+
         $history         = $this->action->getHistory($actionID);
         $action->history = isset($history[$actionID]) ? $history[$actionID] : array();
 

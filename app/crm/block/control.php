@@ -112,8 +112,8 @@ class block extends control
     {
         $this->app->loadLang('order', 'crm');
 
-        $params = $this->get->param;
-        $params = json_decode(base64_decode($params));
+        $params = json_decode(base64_decode((string)$this->get->param));
+        if(!is_object($params)) $params = new stdclass();
         if(!isset($params->type)) $params->type = '';
 
         $this->session->set('orderList', $this->createLink('crm.dashboard', 'index'));
@@ -179,8 +179,8 @@ class block extends control
         $this->lang->contract = new stdclass();
         $this->app->loadLang('contract', 'crm');
 
-        $params = $this->get->param;
-        $params = json_decode(base64_decode($params));
+        $params = json_decode(base64_decode((string)$this->get->param));
+        if(!is_object($params)) $params = new stdclass();
         if(!isset($params->type)) $params->type = '';
 
         $this->session->set('contractList', $this->createLink('crm.dashboard', 'index'));
@@ -208,8 +208,8 @@ class block extends control
      */
     public function printCustomerBlock()
     {
-        $params = $this->get->param;
-        $params = json_decode(base64_decode($params));
+        $params = json_decode(base64_decode((string)$this->get->param));
+        if(!is_object($params)) $params = new stdclass();
         if(!isset($params->type)) $params->type = '';
         $this->app->loadClass('date');
         $thisWeek = date::getThisWeek();

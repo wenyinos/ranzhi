@@ -45,12 +45,16 @@ $lang->block->orderByList->project['begin_desc']       = 'Begin DESC';
 $lang->block->orderByList->project['end_asc']          = 'End ASC';
 $lang->block->orderByList->project['end_desc']         = 'End DESC';
 
+$lang->block->typeList = new stdclass();
+$lang->block->typeList->task = array();
 $lang->block->typeList->task['assignedTo'] = 'Assigned to me';
 $lang->block->typeList->task['createdBy']  = 'My Created';
 $lang->block->typeList->task['finishedBy'] = 'My Finished';
 $lang->block->typeList->task['closedBy']   = 'My Closed';
 $lang->block->typeList->task['canceledBy'] = 'My CancelLed';
 
+$lang->block->statusList = new stdclass();
+$lang->block->statusList->project = array();
 $lang->block->statusList->project['involved'] = 'Involved';
 $lang->block->statusList->project['doing']    = 'Doing';
 $lang->block->statusList->project['finished'] = 'Finished';

@@ -91,7 +91,7 @@ class messageModel extends model
      * @access public
      * @return void
      */
-    public function getList($type, $objectType = null, $status, $pager = null)
+    public function getList($type, $objectType = null, $status = '', $pager = null)
     {
         $messages = $this->dao->select('*')->from(TABLE_MESSAGE)
             ->where('type')->eq($type)
